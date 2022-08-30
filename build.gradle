@@ -37,10 +37,13 @@ dependencies {
 	implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '3.0.0'
 
 	//Spring Boot
-	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.7.2'
 	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '2.7.2'
 	implementation 'org.springframework.boot:spring-boot-starter'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	// Security
+	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-security', version: '2.7.2'
+	implementation files('libs/lsh.jar')
 }
 
 tasks.named('test') {
