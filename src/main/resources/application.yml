@@ -1,15 +1,15 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/daechiwon
-    username: root
-    password: develop1234@!
+    url: jdbc:mysql://${DB_HOST}:${DB_PORT}/${DB_NAME}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
   jpa:
     hibernate:
       ddl-auto: update
 
 google:
   oauth:
-    client-id: 18372732478-n5lmnmbe00h7tdbpsf40pqi96tvnt7tq.apps.googleusercontent.com
-    client-secret: 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
-    client-redirect: http://daechiwon.kro.kr:8080/auth/oauth/google
+    client-id: ${GOOGLE_ID}
+    client-secret: ${GOOGLE_SECRET}
+    client-redirect: ${GOOGLE_REDIRECT}
