@@ -1,5 +1,6 @@
 package com.project.daechiwon.domain.user.entity;
 
+import com.project.daechiwon.domain.plan.entity.EducationPlan;
 import com.project.daechiwon.domain.user.type.UserType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -36,4 +37,7 @@ public class User {
 
     @OneToMany(mappedBy = "oAuthId.user", orphanRemoval = true, cascade = CascadeType.ALL)
     private List<OAuth> oAuthList;
+
+    @OneToMany(mappedBy = "author", orphanRemoval = true, cascade = CascadeType.ALL)
+    private List<EducationPlan> planList;
 }

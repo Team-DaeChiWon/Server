@@ -2,6 +2,7 @@ package com.project.daechiwon.global.security;
 
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -28,6 +29,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
                 // auth
                 .authorizeRequests().antMatchers("/auth/**").permitAll().and()
+
+                // 계획
+                .authorizeRequests()
+                .antMatchers(HttpMethod.GET, "/plans/").permitAll()
+                .antMatchers(HttpMethod.POST, "/plans/").hasAuthority("TEACHER")
+                .antMatchers(HttpMethod.PATCH, "/plans/**").hasAuthority("TEACHER")
+                .antMatchers(HttpMethod.DELETE, "/plans/**").hasAuthority("TEACHER")
+                .and()
 
                 // 별도로 지정하지 아니한 경로는 모두 접근 거부
                 .authorizeRequests().anyRequest().denyAll();
