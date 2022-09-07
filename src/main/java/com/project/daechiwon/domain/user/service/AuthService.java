@@ -52,7 +52,7 @@ public class AuthService {
                 .nickname(request.getNickname())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .oAuthList(new ArrayList<>())
-                .type(UserType.NORMAL)
+                .type(request.getType())
                 .build();
 
         userRepository.save(user);
