@@ -39,11 +39,9 @@ public class AuthController {
     }
 
     @ApiOperation("유저의 프로필을 조회합니다")
-    @GetMapping("/{id}")
-    public UserResponse getUserProfile(
-            @PathVariable("id") Long id
-    ) {
-        return authService.getUserProfile(id);
+    @GetMapping("/")
+    public UserResponse getUserProfile() {
+        return authService.getUserProfile();
     }
 
 }
