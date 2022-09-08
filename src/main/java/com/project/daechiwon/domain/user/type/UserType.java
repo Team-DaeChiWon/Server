@@ -1,9 +1,11 @@
 package com.project.daechiwon.domain.user.type;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.project.daechiwon.global.exception.BusinessException;
+import org.springframework.http.HttpStatus;
 
 public enum UserType {
-    NORMAL, TEACHER
+    NORMAL, TEACHER;
 
     @JsonCreator
     public static UserType fromTestEnum(String val){
@@ -12,6 +14,7 @@ public enum UserType {
                 return userType;
             }
         }
-        return null;
+
+        throw new BusinessException(HttpStatus.BAD_REQUEST, "There's no qualified enum's name :(");
     }
 }
