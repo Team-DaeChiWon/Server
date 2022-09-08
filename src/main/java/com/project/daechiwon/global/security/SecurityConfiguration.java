@@ -4,6 +4,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -12,6 +13,24 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 @EnableWebSecurity
 @Configuration
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+
+    private static final String[] AUTH_WHITELIST = {
+            // -- swagger ui
+            "/v2/api-docs",
+            "/v3/api-docs/**",
+            "/configuration/ui",
+            "/swagger-resources/**",
+            "/configuration/security",
+            "/swagger-ui.html",
+            "/webjars/**",
+            "/file/**",
+            "/image/**",
+            "/swagger/**",
+            "/swagger-ui/**",
+            // other public endpoints of your API may be appended to this array
+            "/h2/**"
+    };
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         log.info("Security configuration loaded");
@@ -40,5 +59,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
                 // 별도로 지정하지 아니한 경로는 모두 접근 거부
                 .authorizeRequests().anyRequest().denyAll();
+    }
+
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        // 정적인 파일 요청에 대해 무시
+        web.ignoring().antMatchers(AUTH_WHITELIST);
     }
 }
