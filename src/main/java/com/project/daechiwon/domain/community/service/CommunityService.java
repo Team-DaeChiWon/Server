@@ -63,16 +63,16 @@ public class CommunityService {
     @Transactional
     public void deleteCommunity(Long id) {
 
-        User author = userFacade.queryUser(true)
+        User owner = userFacade.queryUser(true)
                 .orElseThrow(UserUnauthorizedException::new);
 
         Community community = communityRepository.findById(id)
                 .orElseThrow(CommunityNotFoundException::new);
 
-        if(!community.getAuthor().equals(author))
+        if(!community.getOwner().equals(owner))
             throw new CommunityAccessDeniedException();
 
-        author.getCommunityUserList().remove(new CommunityUser(community, author));
+        owner.getCommunityUserList().remove(new CommunityUser(community, owner));
         communityRepository.delete(community);
     }
 
