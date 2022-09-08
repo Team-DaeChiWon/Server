@@ -22,11 +22,9 @@ public class Community {
 
     // 카페 설명
     @Lob
-    @Column(name = "community_explain")
     private String explain;
 
     // 카페 회원 수
-    @Column(name = "number_of_member")
     private int number;
 
     // 카페 설립일자
