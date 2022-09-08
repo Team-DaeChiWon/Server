@@ -39,7 +39,7 @@ public class CommunityService {
                 .communityName(request.getCommunityName())
                 .explain(request.getCommunityExplain())
                 .number(1)
-                .author(user)
+                .owner(user)
                 .build();
         user.getCommunityUserList().add(new CommunityUser(community, user));
 

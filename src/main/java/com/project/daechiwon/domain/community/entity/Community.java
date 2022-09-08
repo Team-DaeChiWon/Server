@@ -36,7 +36,7 @@ public class Community {
     // 카페 설립자
     @ManyToOne
     @JoinColumn
-    private User author;
+    private User owner;
 
     // 카페 회원들
     @OneToMany(mappedBy = "community", orphanRemoval = true, cascade = CascadeType.ALL)
