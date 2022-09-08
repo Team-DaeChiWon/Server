@@ -2,6 +2,7 @@ package com.project.daechiwon.domain.user.presentation;
 
 import com.project.daechiwon.domain.user.presentation.dto.request.SignInRequest;
 import com.project.daechiwon.domain.user.presentation.dto.request.SignUpRequest;
+import com.project.daechiwon.domain.user.presentation.dto.response.UserResponse;
 import com.project.daechiwon.domain.user.service.AuthService;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -35,6 +36,14 @@ public class AuthController {
     @GetMapping("/oauth/{provider-name}")
     public void oAuth(@RequestParam("code") String code, @PathVariable("provider-name") String oAuthProviderName) {
         authService.oAuth(code, oAuthProviderName);
+    }
+
+    @ApiOperation("유저의 프로필을 조회합니다")
+    @GetMapping("/{id}")
+    public UserResponse getUserProfile(
+            @PathVariable("id") Long id
+    ) {
+        return authService.getUserProfile(id);
     }
 
 }
