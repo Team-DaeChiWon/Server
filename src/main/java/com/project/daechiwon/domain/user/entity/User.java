@@ -1,5 +1,6 @@
 package com.project.daechiwon.domain.user.entity;
 
+import com.project.daechiwon.domain.community.entity.CommunityUser;
 import com.project.daechiwon.domain.plan.entity.EducationPlan;
 import com.project.daechiwon.domain.user.type.UserType;
 import lombok.AllArgsConstructor;
@@ -40,4 +41,8 @@ public class User {
 
     @OneToMany(mappedBy = "author", orphanRemoval = true, cascade = CascadeType.ALL)
     private List<EducationPlan> planList;
+
+    @OneToMany(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.ALL)
+    private List<CommunityUser> communityUserList;
+
 }

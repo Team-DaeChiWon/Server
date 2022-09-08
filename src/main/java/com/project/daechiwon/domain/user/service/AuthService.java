@@ -1,15 +1,18 @@
 package com.project.daechiwon.domain.user.service;
 
+import com.project.daechiwon.domain.community.presentation.dto.response.CommunityResponse;
+import com.project.daechiwon.domain.plan.presentation.dto.response.PlanResponse;
 import com.project.daechiwon.domain.user.entity.User;
 import com.project.daechiwon.domain.user.exception.UserDuplicatedException;
 import com.project.daechiwon.domain.user.exception.UserNotFoundException;
 import com.project.daechiwon.domain.user.exception.UserUnauthorizedException;
 import com.project.daechiwon.domain.user.exception.WrongProviderException;
+import com.project.daechiwon.domain.user.facade.UserFacade;
 import com.project.daechiwon.domain.user.presentation.dto.request.SignInRequest;
 import com.project.daechiwon.domain.user.presentation.dto.request.SignUpRequest;
+import com.project.daechiwon.domain.user.presentation.dto.response.UserResponse;
 import com.project.daechiwon.domain.user.repository.UserRepository;
 import com.project.daechiwon.domain.user.type.OAuthProvider;
-import com.project.daechiwon.domain.user.type.UserType;
 import com.project.daechiwon.global.security.UserAuthentication;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -20,12 +23,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
 public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
+    private final UserFacade userFacade;
 
     @Qualifier("googleOAuthService")
     private final OAuthService googleOAuth;
@@ -52,7 +58,7 @@ public class AuthService {
                 .nickname(request.getNickname())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .oAuthList(new ArrayList<>())
-                .type(UserType.NORMAL)
+                .type(request.getType())
                 .build();
 
         userRepository.save(user);
@@ -75,6 +81,38 @@ public class AuthService {
 
         Authentication authentication = new UserAuthentication(user);
         SecurityContextHolder.getContext().setAuthentication(authentication);
+    }
+
+    @Transactional(readOnly = true)
+    public UserResponse getUserProfile() {
+
+        User user = userFacade.queryUser(true)
+                .orElseThrow(UserUnauthorizedException::new);
+
+        List<PlanResponse> planList = user.getPlanList().stream().map(it ->
+                PlanResponse.builder()
+                        .id(it.getId())
+                        .title(it.getTitle())
+                        .content(it.getContent())
+                        .build()
+        ).collect(Collectors.toList());
+
+        List<CommunityResponse> communityList = user.getCommunityUserList().stream().map(it ->
+                CommunityResponse.builder()
+                        .communityId(it.getCommunity().getCommunityId())
+                        .communityName(it.getCommunity().getCommunityName())
+                        .communityExplain(it.getCommunity().getExplain())
+                        .createAt(it.getCommunity().getCreateAt())
+                        .build()
+        ).collect(Collectors.toList());
+
+        return UserResponse.builder()
+                .loginId(user.getLoginId())
+                .nickName(user.getNickname())
+                .type(user.getType())
+                .planList(planList)
+                .communityList(communityList)
+                .build();
     }
 
 }
