@@ -8,7 +8,6 @@ import com.project.daechiwon.domain.community.exception.CommunityNotFoundExcepti
 import com.project.daechiwon.domain.community.presentation.dto.request.CreateCommunityRequest;
 import com.project.daechiwon.domain.community.presentation.dto.response.CommunityResponse;
 import com.project.daechiwon.domain.community.repository.CommunityRepository;
-import com.project.daechiwon.domain.community.repository.CommunityUserRepository;
 import com.project.daechiwon.domain.user.entity.User;
 import com.project.daechiwon.domain.user.exception.UserUnauthorizedException;
 import com.project.daechiwon.domain.user.facade.UserFacade;
@@ -21,7 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class CommunityService {
 
     private final CommunityRepository communityRepository;
-    private final CommunityUserRepository communityUserRepository;
     private final UserFacade userFacade;
 
     @Transactional
@@ -41,7 +39,10 @@ public class CommunityService {
                 .number(1)
                 .owner(user)
                 .build();
-        user.getCommunityUserList().add(new CommunityUser(community, user));
+        user.getCommunityUserList().add(CommunityUser.builder()
+                .community(community)
+                .user(user)
+                .build());
 
         return communityRepository.save(community).getCommunityId();
     }
@@ -72,7 +73,10 @@ public class CommunityService {
         if(!community.getOwner().equals(owner))
             throw new CommunityAccessDeniedException();
 
-        owner.getCommunityUserList().remove(new CommunityUser(community, owner));
+        owner.getCommunityUserList().remove(CommunityUser.builder()
+                .community(community)
+                .user(owner)
+                .build());
         communityRepository.delete(community);
     }
 

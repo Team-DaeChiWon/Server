@@ -22,8 +22,4 @@ public class CommunityUser {
     @JoinColumn
     private User user;
 
-    public CommunityUser(Community community, User user) {
-        this.community = community;
-        this.user = user;
-    }
 }
