@@ -7,6 +7,7 @@ import com.project.daechiwon.domain.community.exception.CommunityAlreadyExistsEx
 import com.project.daechiwon.domain.community.exception.CommunityNotFoundException;
 import com.project.daechiwon.domain.community.presentation.dto.request.CreateCommunityRequest;
 import com.project.daechiwon.domain.community.presentation.dto.response.CommunityResponse;
+import com.project.daechiwon.domain.community.presentation.dto.response.OwnerResponse;
 import com.project.daechiwon.domain.community.repository.CommunityRepository;
 import com.project.daechiwon.domain.user.entity.User;
 import com.project.daechiwon.domain.user.exception.UserUnauthorizedException;
@@ -35,16 +36,19 @@ public class CommunityService {
 
         Community community = Community.builder()
                 .communityName(request.getCommunityName())
-                .explain(request.getCommunityExplain())
-                .number(1)
+                .communityExplain(request.getCommunityExplain())
+                .memberCount(1)
                 .owner(user)
                 .build();
-        user.getCommunityUserList().add(CommunityUser.builder()
+
+        CommunityUser communityUser = CommunityUser.builder()
                 .community(community)
                 .user(user)
-                .build());
+                .build();
+        community.getCommunityUserList().add(communityUser);
+        user.getCommunityUserList().add(communityUser);
 
-        return communityRepository.save(community).getCommunityId();
+        return communityRepository.save(community).getCommunityIdx();
     }
 
     @Transactional(readOnly = true)
@@ -54,9 +58,13 @@ public class CommunityService {
                 .orElseThrow(CommunityNotFoundException::new);
 
         return CommunityResponse.builder()
-                .communityId(community.getCommunityId())
+                .communityId(community.getCommunityIdx())
                 .communityName(community.getCommunityName())
-                .communityExplain(community.getExplain())
+                .communityExplain(community.getCommunityExplain())
+                .owner(OwnerResponse.builder()
+                        .nickName(community.getOwner().getNickname())
+                        .type(community.getOwner().getType())
+                        .build())
                 .createAt(community.getCreateAt())
                 .build();
     }
@@ -73,10 +81,13 @@ public class CommunityService {
         if(!community.getOwner().equals(owner))
             throw new CommunityAccessDeniedException();
 
-        owner.getCommunityUserList().remove(CommunityUser.builder()
+        CommunityUser communityUser = CommunityUser.builder()
                 .community(community)
                 .user(owner)
-                .build());
+                .build();
+
+        community.getCommunityUserList().remove(communityUser);
+        owner.getCommunityUserList().remove(communityUser);
         communityRepository.delete(community);
     }
 

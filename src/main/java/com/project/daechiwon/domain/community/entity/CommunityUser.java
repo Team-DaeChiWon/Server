@@ -8,18 +8,17 @@ import javax.persistence.*;
 @Entity @Builder
 @AllArgsConstructor
 @Getter @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@IdClass(CommunityUserId.class)
 public class CommunityUser {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long mapId;
-
     @ManyToOne
-    @JoinColumn
+    @JoinColumn(name = "community_id")
     private Community community;
 
+    @Id
     @ManyToOne
-    @JoinColumn
+    @JoinColumn(name = "user_id")
     private User user;
 
 }

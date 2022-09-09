@@ -16,6 +16,8 @@ public class CommunityResponse {
 
     private String communityExplain;
 
+    private OwnerResponse owner;
+
     private int number;
 
     private LocalDateTime createAt;

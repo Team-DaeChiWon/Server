@@ -15,17 +15,17 @@ public class Community {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long communityId;
+    private Long communityIdx;
 
     // 카페 이름
     private String communityName;
 
     // 카페 설명
     @Lob
-    private String explain;
+    private String communityExplain;
 
     // 카페 회원 수
-    private int number;
+    private int memberCount;
 
     // 카페 설립일자
     @CreationTimestamp
@@ -33,7 +33,7 @@ public class Community {
 
     // 카페 설립자
     @ManyToOne
-    @JoinColumn
+    @JoinColumn(name = "owner_id")
     private User owner;
 
     // 카페 회원들
