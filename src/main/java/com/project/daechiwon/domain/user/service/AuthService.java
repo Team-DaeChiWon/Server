@@ -99,9 +99,9 @@ public class AuthService {
 
         List<CommunityResponse> communityList = user.getCommunityUserList().stream().map(it ->
                 CommunityResponse.builder()
-                        .communityId(it.getCommunity().getCommunityId())
+                        .communityId(it.getCommunity().getCommunityIdx())
                         .communityName(it.getCommunity().getCommunityName())
-                        .communityExplain(it.getCommunity().getExplain())
+                        .communityExplain(it.getCommunity().getCommunityExplain())
                         .createAt(it.getCommunity().getCreateAt())
                         .build()
         ).collect(Collectors.toList());
