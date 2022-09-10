@@ -47,7 +47,7 @@ public class CommunityService {
         community.getCommunityUserList().add(communityUser);
         user.getCommunityUserList().add(communityUser);
 
-        return communityRepository.save(community).getCommunityIdx();
+        return communityRepository.save(community).getCommunityId();
     }
 
     @Transactional(readOnly = true)
@@ -57,7 +57,7 @@ public class CommunityService {
                 .orElseThrow(CommunityNotFoundException::new);
 
         return CommunityResponse.builder()
-                .communityId(community.getCommunityIdx())
+                .communityId(community.getCommunityId())
                 .communityName(community.getCommunityName())
                 .communityExplain(community.getCommunityExplain())
                 .owner(OwnerResponse.builder()
@@ -85,7 +85,6 @@ public class CommunityService {
                 .user(owner)
                 .build();
 
-        community.getCommunityUserList().remove(communityUser);
         owner.getCommunityUserList().remove(communityUser);
         communityRepository.delete(community);
     }

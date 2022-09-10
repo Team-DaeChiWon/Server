@@ -15,9 +15,10 @@ public class Community {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long communityIdx;
+    private Long communityId;
 
     // 카페 이름
+    @Column(nullable = false)
     private String communityName;
 
     // 카페 설명
@@ -32,6 +33,9 @@ public class Community {
     @ManyToOne
     @JoinColumn(name = "owner_id")
     private User owner;
+    public void addOwner(User user) {
+        this.owner = user;
+    }
 
     // 카페 회원들
     @OneToMany(mappedBy = "community", orphanRemoval = true, cascade = CascadeType.ALL)
