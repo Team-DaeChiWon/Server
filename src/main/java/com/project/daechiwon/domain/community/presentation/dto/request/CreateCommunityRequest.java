@@ -1,11 +1,9 @@
 package com.project.daechiwon.domain.community.presentation.dto.request;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-@Getter @AllArgsConstructor
-@Builder
+@Getter @NoArgsConstructor
 public class CreateCommunityRequest {
 
     private String communityName;

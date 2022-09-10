@@ -24,9 +24,6 @@ public class Community {
     @Lob
     private String communityExplain;
 
-    // 카페 회원 수
-    private int memberCount;
-
     // 카페 설립일자
     @CreationTimestamp
     private LocalDateTime createAt;

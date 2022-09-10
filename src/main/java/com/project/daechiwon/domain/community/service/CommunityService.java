@@ -37,7 +37,6 @@ public class CommunityService {
         Community community = Community.builder()
                 .communityName(request.getCommunityName())
                 .communityExplain(request.getCommunityExplain())
-                .memberCount(1)
                 .owner(user)
                 .build();
 
