@@ -33,11 +33,11 @@ public class Community {
     @ManyToOne
     @JoinColumn(name = "owner_id")
     private User owner;
-    public void addOwner(User user) {
-        this.owner = user;
-    }
 
     // 카페 회원들
     @OneToMany(mappedBy = "community", orphanRemoval = true, cascade = CascadeType.ALL)
     private List<CommunityUser> communityUserList;
+    public void addUser(CommunityUser communityUser) {
+        this.communityUserList.add(communityUser);
+    }
 }

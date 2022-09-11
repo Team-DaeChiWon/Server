@@ -44,8 +44,9 @@ public class CommunityService {
                 .community(community)
                 .user(user)
                 .build();
-        community.getCommunityUserList().add(communityUser);
-        user.getCommunityUserList().add(communityUser);
+
+        community.addUser(communityUser);
+        user.addCommunity(communityUser);
 
         return communityRepository.save(community).getCommunityId();
     }
