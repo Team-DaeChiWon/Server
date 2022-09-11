@@ -13,6 +13,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @AllArgsConstructor @NoArgsConstructor
@@ -48,6 +49,20 @@ public class User {
 
     @OneToMany(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.ALL)
     private List<CommunityUser> communityUserList;
+    public List<Community> getCommunityList() {
+        return getCommunityUserList().stream()
+                .map(it ->
+                        Community.builder()
+                                .communityId(it.getCommunity().getCommunityId())
+                                .communityName(it.getCommunity().getCommunityName())
+                                .communityExplain(it.getCommunity().getCommunityExplain())
+                                .owner(it.getCommunity().getOwner())
+                                .createAt(it.getCommunity().getCreateAt())
+                                .communityUserList(it.getCommunity().getCommunityUserList())
+                                .build()
+                ).collect(Collectors.toList());
+    }
+
     public void addCommunity(CommunityUser communityUser) {
         this.communityUserList.add(communityUser);
     }
