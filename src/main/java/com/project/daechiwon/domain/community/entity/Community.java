@@ -1,5 +1,6 @@
 package com.project.daechiwon.domain.community.entity;
 
+import com.project.daechiwon.domain.notification.entity.Notification;
 import com.project.daechiwon.domain.user.entity.User;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -40,4 +41,7 @@ public class Community {
     // 카페 회원들
     @OneToMany(mappedBy = "community", orphanRemoval = true, cascade = CascadeType.ALL)
     private List<CommunityUser> communityUserList;
+
+    @OneToMany(mappedBy = "community", orphanRemoval = true, cascade = CascadeType.ALL)
+    private List<Notification> notificationList;
 }

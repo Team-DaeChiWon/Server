@@ -2,6 +2,7 @@ package com.project.daechiwon.domain.user.entity;
 
 import com.project.daechiwon.domain.community.entity.Community;
 import com.project.daechiwon.domain.community.entity.CommunityUser;
+import com.project.daechiwon.domain.notification.entity.Notification;
 import com.project.daechiwon.domain.plan.entity.EducationPlan;
 import com.project.daechiwon.domain.user.type.UserType;
 import lombok.AllArgsConstructor;
@@ -48,5 +49,11 @@ public class User {
 
     @OneToMany(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.ALL)
     private List<CommunityUser> communityUserList;
+    public void addCommunity(CommunityUser communityUser) {
+        this.communityUserList.add(communityUser);
+    }
+
+    @OneToMany(mappedBy = "author", orphanRemoval = true, cascade = CascadeType.ALL)
+    private List<Notification> notificationList;
 
 }
