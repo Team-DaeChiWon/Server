@@ -44,9 +44,6 @@ public class User {
     @OneToMany(mappedBy = "author", orphanRemoval = true, cascade = CascadeType.ALL)
     private List<EducationPlan> planList;
 
-    @OneToMany(mappedBy = "owner", orphanRemoval = true, cascade = CascadeType.ALL)
-    private List<Community> communityList;
-
     @OneToMany(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.ALL)
     private List<CommunityUser> communityUserList;
     public List<Community> getCommunityList() {
