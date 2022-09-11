@@ -61,10 +61,7 @@ public class CommunityService {
                 .communityId(community.getCommunityId())
                 .communityName(community.getCommunityName())
                 .communityExplain(community.getCommunityExplain())
-                .owner(OwnerResponse.builder()
-                        .nickName(community.getOwner().getNickname())
-                        .type(community.getOwner().getType())
-                        .build())
+                .ownerId(community.getOwner().getId())
                 .createAt(community.getCreateAt())
                 .build();
     }

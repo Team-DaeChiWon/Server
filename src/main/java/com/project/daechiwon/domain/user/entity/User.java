@@ -48,5 +48,8 @@ public class User {
 
     @OneToMany(mappedBy = "user", orphanRemoval = true, cascade = CascadeType.ALL)
     private List<CommunityUser> communityUserList;
+    public void addCommunity(CommunityUser communityUser) {
+        this.communityUserList.add(communityUser);
+    }
 
 }
