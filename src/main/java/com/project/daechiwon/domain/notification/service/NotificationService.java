@@ -49,6 +49,7 @@ public class NotificationService {
                 .community(community)
                 .author(user)
                 .build();
+        community.getNotificationList().add(notification);
         user.getNotificationList().add(notification);
 
         return notification.getNotificationId();
