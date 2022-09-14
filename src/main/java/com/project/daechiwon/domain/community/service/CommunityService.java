@@ -13,9 +13,11 @@ import com.project.daechiwon.domain.user.entity.User;
 import com.project.daechiwon.domain.user.exception.UserUnauthorizedException;
 import com.project.daechiwon.domain.user.facade.UserFacade;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class CommunityService {
@@ -24,7 +26,7 @@ public class CommunityService {
     private final UserFacade userFacade;
 
     @Transactional
-    public Long createCommunity(CreateCommunityRequest request) {
+    public void createCommunity(CreateCommunityRequest request) {
 
         User user = userFacade.queryUser(true)
                 .orElseThrow(UserUnauthorizedException::new);
@@ -39,16 +41,14 @@ public class CommunityService {
                 .communityExplain(request.getCommunityExplain())
                 .owner(user)
                 .build();
+        community = communityRepository.save(community);
 
         CommunityUser communityUser = CommunityUser.builder()
                 .community(community)
                 .user(user)
                 .build();
 
-        community.addUser(communityUser);
         user.addCommunity(communityUser);
-
-        return communityRepository.save(community).getCommunityId();
     }
 
     @Transactional(readOnly = true)
@@ -78,12 +78,6 @@ public class CommunityService {
         if(!community.getOwner().equals(owner))
             throw new CommunityAccessDeniedException();
 
-        CommunityUser communityUser = CommunityUser.builder()
-                .community(community)
-                .user(owner)
-                .build();
-
-        owner.getCommunityUserList().remove(communityUser);
         communityRepository.delete(community);
     }
 

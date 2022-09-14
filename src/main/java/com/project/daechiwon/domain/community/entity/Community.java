@@ -1,11 +1,13 @@
 package com.project.daechiwon.domain.community.entity;
 
+import com.project.daechiwon.domain.notification.entity.Notification;
 import com.project.daechiwon.domain.user.entity.User;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity @Builder
@@ -34,10 +36,4 @@ public class Community {
     @JoinColumn(name = "owner_id")
     private User owner;
 
-    // 카페 회원들
-    @OneToMany(mappedBy = "community", orphanRemoval = true, cascade = CascadeType.ALL)
-    private List<CommunityUser> communityUserList;
-    public void addUser(CommunityUser communityUser) {
-        this.communityUserList.add(communityUser);
-    }
 }

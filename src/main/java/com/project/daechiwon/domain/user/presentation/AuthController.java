@@ -19,14 +19,14 @@ import javax.validation.Valid;
 public class AuthController {
     private final AuthService authService;
 
-    @ApiOperation("유저가 회원가입을 합니다")
+    @ApiOperation("유저가 로그인을 합니다")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PostMapping("/sign-in")
     public void signIn(@Valid @RequestBody SignInRequest request) {
         authService.signIn(request);
     }
 
-    @ApiOperation("유저가 로그인을 합니다")
+    @ApiOperation("유저가 회원가입을 합니다")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/sign-up")
     public void signUp(@Valid @RequestBody SignUpRequest request) {
