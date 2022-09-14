@@ -20,10 +20,10 @@ public class CommunityController {
     @ApiOperation("커뮤니티를 생성합니다")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/")
-    public Long createCommunity(
+    public void createCommunity(
             @RequestBody CreateCommunityRequest request
     ) {
-        return communityService.createCommunity(request);
+        communityService.createCommunity(request);
     }
 
     @ApiOperation("커뮤니티 id로 정보를 가지고 옵니다")

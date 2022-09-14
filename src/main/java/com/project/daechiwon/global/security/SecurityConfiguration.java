@@ -49,6 +49,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 // auth
                 .authorizeRequests().antMatchers("/auth/**").permitAll().and()
 
+                // community
+                .authorizeRequests().antMatchers("/community/**").permitAll()
+                .and()
+
+                // 알림장
+                .authorizeRequests().antMatchers("/notification/**").permitAll()
+                .and()
+
                 // 계획
                 .authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/plans/").permitAll()

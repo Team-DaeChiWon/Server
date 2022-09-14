@@ -1,5 +1,6 @@
 package com.project.daechiwon.domain.community.entity;
 
+import com.project.daechiwon.domain.user.entity.User;
 import lombok.*;
 
 import java.io.Serializable;
@@ -10,8 +11,8 @@ import java.io.Serializable;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class CommunityUserId implements Serializable {
 
-    private Long community;
+    private Community community;
 
-    private Long user;
+    private User user;
 
 }

@@ -1,15 +1,21 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://${DB_HOST}:${DB_PORT}/${DB_NAME}
-    username: ${DB_USER}
-    password: ${DB_PASSWORD}
+    url: jdbc:mysql://127.0.0.1:3306/daechiwon
+    username: root
+    password: jyj10241103*
   jpa:
     hibernate:
       ddl-auto: update
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
 
-google:
-  oauth:
-    client-id: ${GOOGLE_ID}
-    client-secret: ${GOOGLE_SECRET}
-    client-redirect: ${GOOGLE_REDIRECT}
+#google:
+#  oauth:
+#    client-id: ${GOOGLE_ID}
+#    client-secret: ${GOOGLE_SECRET}
+#    client-redirect: ${GOOGLE_REDIRECT}
+
+server:
+  port: 8081

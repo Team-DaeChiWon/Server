@@ -7,6 +7,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity @Builder
@@ -39,9 +40,15 @@ public class Community {
     }
 
     // 카페 회원들
-    @OneToMany(mappedBy = "community", orphanRemoval = true, cascade = CascadeType.ALL)
-    private List<CommunityUser> communityUserList;
+    @OneToMany(mappedBy = "community", cascade = CascadeType.ALL)
+    private List<CommunityUser> communityUserList = new ArrayList<>();
+    public void addUser(CommunityUser communityUser) {
+        this.communityUserList.add(communityUser);
+    }
 
-    @OneToMany(mappedBy = "community", orphanRemoval = true, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "community", cascade = CascadeType.ALL)
     private List<Notification> notificationList;
+    public void addNotification(Notification notification) {
+        this.notificationList.add(notification);
+    }
 }
