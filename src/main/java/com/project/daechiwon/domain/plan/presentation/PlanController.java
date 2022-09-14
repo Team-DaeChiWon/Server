@@ -4,11 +4,13 @@ import com.project.daechiwon.domain.plan.presentation.dto.request.PlanCreationRe
 import com.project.daechiwon.domain.plan.presentation.dto.request.PlanModifyRequest;
 import com.project.daechiwon.domain.plan.presentation.dto.response.PlanOfMonthResponse;
 import com.project.daechiwon.domain.plan.service.PlanService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+@Api(tags = "교육계획표")
 @RequiredArgsConstructor
 @RequestMapping("/plans")
 @RestController

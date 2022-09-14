@@ -4,6 +4,7 @@ import com.project.daechiwon.domain.user.presentation.dto.request.SignInRequest;
 import com.project.daechiwon.domain.user.presentation.dto.request.SignUpRequest;
 import com.project.daechiwon.domain.user.presentation.dto.response.UserResponse;
 import com.project.daechiwon.domain.user.service.AuthService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+@Api(tags = "유저")
 @RequiredArgsConstructor
 @RequestMapping("/auth")
 @RestController
