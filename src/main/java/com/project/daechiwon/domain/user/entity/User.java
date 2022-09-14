@@ -15,6 +15,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @AllArgsConstructor @NoArgsConstructor
@@ -44,17 +45,5 @@ public class User {
 
     @OneToMany(mappedBy = "author", cascade = {CascadeType.PERSIST})
     private List<EducationPlan> planList;
-
-    @OneToMany(mappedBy = "owner", cascade = {CascadeType.PERSIST})
-    private List<Community> communityList;
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<CommunityUser> communityUserList = new ArrayList<>();
-    public void addCommunity(CommunityUser communityUser) {
-        this.communityUserList.add(communityUser);
-    }
-
-    @OneToMany(mappedBy = "author", cascade = {CascadeType.PERSIST})
-    private List<Notification> notificationList;
 
 }

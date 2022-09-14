@@ -16,7 +16,7 @@ public class CommunityResponse {
 
     private String communityExplain;
 
-    private OwnerResponse owner;
+    private Long ownerId;
 
     private int number;
 

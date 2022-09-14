@@ -35,20 +35,5 @@ public class Community {
     @ManyToOne
     @JoinColumn(name = "owner_id")
     private User owner;
-    public void addOwner(User user) {
-        this.owner = user;
-    }
 
-    // 카페 회원들
-    @OneToMany(mappedBy = "community", cascade = CascadeType.ALL)
-    private List<CommunityUser> communityUserList = new ArrayList<>();
-    public void addUser(CommunityUser communityUser) {
-        this.communityUserList.add(communityUser);
-    }
-
-    @OneToMany(mappedBy = "community", cascade = CascadeType.ALL)
-    private List<Notification> notificationList;
-    public void addNotification(Notification notification) {
-        this.notificationList.add(notification);
-    }
 }

@@ -97,15 +97,6 @@ public class AuthService {
                         .build()
         ).collect(Collectors.toList());
 
-        List<CommunityResponse> communityList = user.getCommunityUserList().stream().map(it ->
-                CommunityResponse.builder()
-                        .communityId(it.getCommunity().getCommunityId())
-                        .communityName(it.getCommunity().getCommunityName())
-                        .communityExplain(it.getCommunity().getCommunityExplain())
-                        .createAt(it.getCommunity().getCreateAt())
-                        .build()
-        ).collect(Collectors.toList());
-
         return UserResponse.builder()
                 .loginId(user.getLoginId())
                 .nickName(user.getNickname())
