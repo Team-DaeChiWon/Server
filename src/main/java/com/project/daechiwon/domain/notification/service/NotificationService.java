@@ -15,6 +15,7 @@ import com.project.daechiwon.domain.user.exception.UserUnauthorizedException;
 import com.project.daechiwon.domain.user.facade.UserFacade;
 import com.project.daechiwon.global.exception.BusinessException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,37 +23,36 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class NotificationService {
 
-    private CommunityRepository communityRepository;
-    private NotificationRepository notificationRepository;
-    private UserFacade userFacade;
+    private final CommunityRepository communityRepository;
+    private final NotificationRepository notificationRepository;
+    private final UserFacade userFacade;
 
     @Transactional
-    public Long createNotification(Long communityId, CreateNotificationRequest request) {
+    public void createNotification(Long communityId, CreateNotificationRequest request) {
 
         User user = userFacade.queryUser(true)
                 .orElseThrow(UserUnauthorizedException::new);
 
-        notificationRepository.findByContent(request.getContent())
+        Community community = communityRepository.findById(communityId)
+                .orElseThrow(CommunityNotFoundException::new);
+
+        notificationRepository.findByContentAndCommunity(request.getContent(), community)
                 .ifPresent(m -> {
                     throw new NotificationAlreadyExistsException();
                 });
-
-        Community community = communityRepository.findById(communityId)
-                .orElseThrow(CommunityNotFoundException::new);
 
         Notification notification = Notification.builder()
                 .content(request.getContent())
                 .community(community)
                 .author(user)
                 .build();
-        community.getNotificationList().add(notification);
-        user.getNotificationList().add(notification);
+        community.addNotification(notification);
 
-        return notification.getNotificationId();
     }
 
     @Transactional(readOnly = true)

@@ -6,25 +6,27 @@ import com.project.daechiwon.domain.notification.service.NotificationService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+@Slf4j
 @Api(tags = "알림장")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/notification")
 public class NotificationController {
 
-    private NotificationService notificationService;
+    private final NotificationService notificationService;
 
     @ApiOperation("알림장을 작성합니다")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/{community-id}")
-    public Long createNotification(
+    public void createNotification(
             @PathVariable("community-id") Long communityId,
             @RequestBody CreateNotificationRequest request
     ) {
-        return notificationService.createNotification(communityId, request);
+        notificationService.createNotification(communityId, request);
     }
 
     @ApiOperation("알림장의 정보를 가지고 옵니다")
