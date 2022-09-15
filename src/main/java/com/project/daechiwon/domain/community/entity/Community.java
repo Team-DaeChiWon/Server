@@ -1,5 +1,6 @@
 package com.project.daechiwon.domain.community.entity;
 
+import com.project.daechiwon.domain.feed.entity.Feed;
 import com.project.daechiwon.domain.notification.entity.Notification;
 import com.project.daechiwon.domain.user.entity.User;
 import lombok.*;
@@ -50,5 +51,11 @@ public class Community {
     private List<Notification> notificationList;
     public void addNotification(Notification notification) {
         this.notificationList.add(notification);
+    }
+
+    @OneToMany(mappedBy = "community", cascade = CascadeType.ALL)
+    private List<Feed> feedList;
+    public void addFeed(Feed feed) {
+        this.feedList.add(feed);
     }
 }

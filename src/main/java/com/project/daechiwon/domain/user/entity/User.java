@@ -2,6 +2,7 @@ package com.project.daechiwon.domain.user.entity;
 
 import com.project.daechiwon.domain.community.entity.Community;
 import com.project.daechiwon.domain.community.entity.CommunityUser;
+import com.project.daechiwon.domain.feed.entity.Feed;
 import com.project.daechiwon.domain.notification.entity.Notification;
 import com.project.daechiwon.domain.plan.entity.EducationPlan;
 import com.project.daechiwon.domain.user.type.UserType;
@@ -42,10 +43,10 @@ public class User {
     @OneToMany(mappedBy = "oAuthId.user", orphanRemoval = true, cascade = CascadeType.ALL)
     private List<OAuth> oAuthList;
 
-    @OneToMany(mappedBy = "author", cascade = {CascadeType.PERSIST})
+    @OneToMany(mappedBy = "author", cascade = CascadeType.PERSIST)
     private List<EducationPlan> planList;
 
-    @OneToMany(mappedBy = "owner", cascade = {CascadeType.PERSIST})
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.PERSIST)
     private List<Community> communityList;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
@@ -54,7 +55,10 @@ public class User {
         this.communityUserList.add(communityUser);
     }
 
-    @OneToMany(mappedBy = "author", cascade = {CascadeType.PERSIST})
+    @OneToMany(mappedBy = "author", cascade = CascadeType.PERSIST)
     private List<Notification> notificationList;
+
+    @OneToMany(mappedBy = "author", cascade = CascadeType.PERSIST)
+    private List<Feed> feedList;
 
 }
