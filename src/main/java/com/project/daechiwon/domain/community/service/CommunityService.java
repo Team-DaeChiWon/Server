@@ -7,7 +7,6 @@ import com.project.daechiwon.domain.community.exception.CommunityAlreadyExistsEx
 import com.project.daechiwon.domain.community.exception.CommunityNotFoundException;
 import com.project.daechiwon.domain.community.presentation.dto.request.CreateCommunityRequest;
 import com.project.daechiwon.domain.community.presentation.dto.response.CommunityResponse;
-import com.project.daechiwon.domain.community.presentation.dto.response.OwnerResponse;
 import com.project.daechiwon.domain.community.repository.CommunityRepository;
 import com.project.daechiwon.domain.user.entity.User;
 import com.project.daechiwon.domain.user.exception.UserUnauthorizedException;

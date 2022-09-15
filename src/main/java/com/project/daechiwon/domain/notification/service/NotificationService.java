@@ -1,7 +1,6 @@
 package com.project.daechiwon.domain.notification.service;
 
 import com.project.daechiwon.domain.community.entity.Community;
-import com.project.daechiwon.domain.community.entity.CommunityUser;
 import com.project.daechiwon.domain.community.exception.CommunityNotFoundException;
 import com.project.daechiwon.domain.community.repository.CommunityRepository;
 import com.project.daechiwon.domain.notification.entity.Notification;
@@ -13,15 +12,10 @@ import com.project.daechiwon.domain.notification.repository.NotificationReposito
 import com.project.daechiwon.domain.user.entity.User;
 import com.project.daechiwon.domain.user.exception.UserUnauthorizedException;
 import com.project.daechiwon.domain.user.facade.UserFacade;
-import com.project.daechiwon.global.exception.BusinessException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service
