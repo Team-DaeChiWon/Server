@@ -1,6 +1,8 @@
 package com.project.daechiwon.domain.user.service;
 
 import com.project.daechiwon.domain.community.presentation.dto.response.CommunityResponse;
+import com.project.daechiwon.domain.feed.presentation.dto.response.FeedResponse;
+import com.project.daechiwon.domain.notification.presentation.dto.response.NotificationResponse;
 import com.project.daechiwon.domain.plan.presentation.dto.response.PlanResponse;
 import com.project.daechiwon.domain.user.entity.User;
 import com.project.daechiwon.domain.user.exception.UserDuplicatedException;
@@ -106,12 +108,35 @@ public class AuthService {
                         .build()
         ).collect(Collectors.toList());
 
+        List<NotificationResponse> notificationList = user.getNotificationList().stream().map(it ->
+                NotificationResponse.builder()
+                        .notificationId(it.getNotificationId())
+                        .content(it.getContent())
+                        .createAt(it.getCreateAt())
+                        .communityId(it.getCommunity().getCommunityId())
+                        .authorId(it.getAuthor().getId())
+                        .build()
+        ).collect(Collectors.toList());
+
+        List<FeedResponse> feedlist = user.getFeedList().stream().map(it ->
+                FeedResponse.builder()
+                        .feedId(it.getFeedId())
+                        .title(it.getTitle())
+                        .content(it.getContent())
+                        .createAt(it.getCreateAt())
+                        .authorId(it.getAuthor().getId())
+                        .communityId(it.getCommunity().getCommunityId())
+                        .build()
+        ).collect(Collectors.toList());
+
         return UserResponse.builder()
                 .loginId(user.getLoginId())
                 .nickName(user.getNickname())
                 .type(user.getType())
                 .planList(planList)
                 .communityList(communityList)
+                .notificationList(notificationList)
+                .feedList(feedlist)
                 .build();
     }
 
